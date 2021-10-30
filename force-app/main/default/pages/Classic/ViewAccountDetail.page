@@ -1,0 +1,10 @@
+<apex:page id="ViewAccountDetail" sidebar="false" showHeader="true" docType="html-5.0" standardController="Account" extensions="ViewAccountDetailController">
+    <apex:form >
+        <apex:pageBlock mode="maindetail">
+        <!-- mode="maindetail" -> Para manter um layout mais próximo do natural e não do de edição -->
+            <apex:detail title="true" subject="{!Account.Id}"/>
+            <c:ContactList isDetail="true" isEditMode="{!isEditMode}" list="{!listContact}" newContactAction="{!addContact}" deleteContactAction="{!deleteContact}" editContactAction="{!editContacts}" saveContactAction="{!saveContacts}"/>
+        </apex:pageBlock>
+    </apex:form>
+    <!-- COISAS DIFERENTES ->  list="{!listContact}" -->
+</apex:page>

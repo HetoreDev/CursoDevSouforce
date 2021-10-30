@@ -1,0 +1,78 @@
+<apex:page id="AccountPage" docType="html-5.0" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardController="Account" recordSetVar="accounts">
+    
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>Account</title>
+            <apex:slds />
+        </head>
+        <body>
+            <div class="slds-scope">
+                <apex:form id="listForm">
+                    <apex:outputPanel layout="block" styleClass="slds-card">
+                        <div class="slds-card_header slds-grid">
+                            <h1 class="slds-text-heading_medium slds-size--5-of-12">Account List</h1>
+                            <apex:commandButton id="newButtonId" value="New Account" styleClass="slds-button slds-button_neutral" action="{!URLFOR($Action.Account.New)}"/><!-- $Action.Account.New = Variável global VF -->
+                        </div>
+                        
+                        <div class="slds-select_container" style="width:230px">
+                            <apex:selectList styleClass="slds-select" value="{!filterId}" size="1">
+                                <!-- Picklist, value se refere ao lugar onde o valor que for selecionado será armazenado, size quantos valores poderão ser selecionados de uma vez -->
+                                <apex:selectOptions value="{!listViewOptions}"/>
+                                <!-- Exibe uma lista padrão da standardController Account -->
+                                <apex:actionSupport event="onchange" reRender="listForm"/>
+                                <!-- Mapeia o JS no VF e chama o método onchange reRenderizando a Form definida acima -->
+                            </apex:selectList>
+                        </div>    
+                        
+                        
+                        <apex:dataTable styleClass="slds-table" value="{!accounts}" var="account" rows="{!PageSize}">
+                            <apex:column >
+                                <apex:facet name="header"> </apex:facet>
+                                <apex:commandLink value="Editar" action="{!URLFOR($Action.Account.Edit, account.Id)}"></apex:commandLink> |&nbsp;
+                                <apex:commandLink value="Gerar PDF" action="{!URLFOR($Page.AccountPDF, null, [Id=account.Id])}" target="_blank"></apex:commandLink>
+                                <!-- URLFOR = Encaminha a saída para a URL correspondente da Action, account.Id = Passa como parâmetro o Id da conta selecionada -->
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"> Name </apex:facet>
+                                <apex:outputLink value="/apex/ViewAccountDetail?Id={!account.Id}">{!account.Name}</apex:outputLink>
+                            </apex:column>
+                            <apex:column value="{!account.Phone}" headerValue="Phone"/>
+                            <apex:column value="{!account.Website}" headerValue="Website"/>
+                        </apex:dataTable>
+                        <!-- Cria a seção onde conterá os elementos de ajuste de paginação -->
+                        <apex:outputPanel layout="block" style="display:flex; flex=direction:row; justify-content:space-between">
+                            <div>
+                                <!-- PageNumer = página atual, ResultSize = quantidade de registros, PagaSize = quantidade de registros por página, CEILING = método arredondamento para cima -->
+                                {!PageNumber} de {!CEILING(ResultSize / PageSize)} // PageSize: {!PageSize} - ResultSize: {!ResultSize} // x = ResultSize / PageSize
+                            </div>
+                            <div>
+                                <apex:commandButton styleClass="slds-button slds-button_brand" action="{!First}" value="<< First"/>
+                                <apex:commandButton styleClass="slds-button slds-button_brand" action="{!Previous}" value="< Previous"/>
+                                <apex:commandButton styleClass="slds-button slds-button_brand" action="{!Next}" value="Next >"/>
+                                <apex:commandButton styleClass="slds-button slds-button_brand" action="{!Last}" value="Last >>"/>
+                            </div>
+                            <div class="slds-select_container" style="width:30px">
+                                <!-- Elemento da picklist contendo as opções de quantidade de itens por página -->
+                                <apex:selectList styleClass="slds-select" value="{!PageSize}" size="1">
+                                    <apex:selectOption itemValue="5" itemLabel="5"/>
+                                    <apex:selectOption itemValue="10" itemLabel="10"/>
+                                    <apex:selectOption itemValue="15" itemLabel="15"/>
+                                    <apex:selectOption itemValue="20" itemLabel="20"/>
+                                    <apex:actionSupport event="onchange" reRender="listForm"/>
+                                </apex:selectList>
+                            </div>            
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:form>
+            </div>
+        </body>
+        <script>
+            alert(document.getElementById('{!$Component.listForm.newButtonId}'));
+            //Para o getElementById funcionar, é necessário que seja declarada toda a árvore de elementos(SEUS IDS)
+        </script>
+    </html>
+   
+</apex:page>
+<!-- https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_variables_global.htm -->

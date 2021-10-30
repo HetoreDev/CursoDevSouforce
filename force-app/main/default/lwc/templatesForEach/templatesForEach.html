@@ -1,0 +1,15 @@
+<template>
+    <template if:true={data}>
+        <ul>
+            <template for:each={data} for:item="row" for:index="index">
+                <template if:false={index}>
+                    <li key={row.name}> <strong>{index}) {row.name}</strong></li>
+                </template>
+                
+                <template if:true={index}>
+                    <li key={row.name}> {index}) {row.name}</li>
+                </template>
+            </template>
+        </ul>
+    </template>
+</template>

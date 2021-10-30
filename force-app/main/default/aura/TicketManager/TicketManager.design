@@ -1,0 +1,4 @@
+<design:component >
+    <design:attribute name="modo24h" label="Modo 24h" description="Monstra a hora no formato 24h"/>
+    <design:attribute name="moeda" label="Indique a moeda padrão" datasource="BRL, USD, EUR" default="BRL" description="Alterne a moeda aqui"/>
+</design:component>

@@ -1,0 +1,19 @@
+<apex:page id="AccountPage" lightningStylesheets="true" docType="html-5.0" showHeader="true" sidebar="false" standardController="Account" extensions="AccountControllerExtension">
+    <apex:form id="accountForm">
+        <apex:actionFunction name="addContact" action="{!addContact}" reRender="contactInformation" immediate="true"/><!-- immediate="true" desab. a validação autom.-->
+        <apex:actionFunction name="deleteContact" action="{!deleteContact}" reRender="contactInformation" immediate="true">
+            <apex:param name="index" value=""/>
+        </apex:actionFunction>    
+        <apex:pageBlock mode="edit"><!-- edit = encaminha para a página de registro logo após salvar -->
+            <apex:pageBlockButtons location="top"> <!-- área onde ficará os botões, alinhando eles em um espaço - top/bottom/both-->
+                <apex:commandButton value="Save" action="{!saveAccount}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Account Information" columns="2"> <!-- pageBlockSection = tabela -->
+                <apex:inputField value="{!account.Name}"/><!-- {} Visualforce expressions -->
+                <apex:inputField value="{!account.Site}"/>
+                <apex:inputField value="{!account.Phone}"/>
+            </apex:pageBlockSection>
+            <c:ContactList isEditMode="true" list="{!listContact}" newContactAction="{!addContact}" deleteContactAction="{!deleteContact}"/>     
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

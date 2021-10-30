@@ -1,0 +1,52 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global"> 
+
+    <aura:attribute name="vooIda" type="Object" default="{}"/>
+    <aura:attribute name="vooVolta" type="Object" default="{}"/>    
+    <aura:attribute name="moeda" type="String" default="USD"/>
+
+    <aura:registerEvent name="ticketEventClick" type="c:ticketEventClick"/> <!-- name="ticketEventClick" será passado para o JD deste bundle  -->
+
+    <lightning:card>
+        <div class="slds-grid slds-grid_align-space">
+            <div class="slds-col slds-m-top_large">
+              <p>{!v.vooIda.Companhia__c}</p>
+              <p>{!v.vooVolta.Companhia__c}</p>
+            </div>
+            <div class="slds-col">
+                <!-- Voo Origem -->
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                      <p><strong>{!v.vooIda.Hora_de_Partida__c}</strong></p>
+                      <p>{!v.vooIda.Aeroporto_Partida__r.Sigla__c}</p>
+                    </div>
+                    <div class="slds-col">
+                      <div class="seta"></div>
+                    </div>
+                    <div class="slds-col">
+                        <p><strong>{!v.vooIda.Hora_de_Chegada__c} <aura:if isTrue="{!v.vooIda.Data_Partida__c != v.vooIda.Data_Chegada__c}"> +1</aura:if></strong></p>
+                        <p>{!v.vooIda.Aeroporto_Chegada__r.Sigla__c}</p>
+                    </div>
+                </div>
+                <!-- Voo Destino -->
+                <div class="slds-grid slds-gutters slds-m-top_medium">
+                    <div class="slds-col">
+                      <p><strong>{!v.vooVolta.Hora_de_Partida__c}</strong></p>
+                      <p>{!v.vooVolta.Aeroporto_Partida__r.Sigla__c}</p>
+                    </div>
+                    <div class="slds-col">
+                      <div class="seta"></div>
+                    </div>
+                    <div class="slds-col">
+                        <p><strong>{!v.vooVolta.Hora_de_Chegada__c} <aura:if isTrue="{!v.vooVolta.Data_Partida__c != v.vooVolta.Data_Chegada__c}"> +1</aura:if></strong></p>
+                        <p>{!v.vooVolta.Aeroporto_Chegada__r.Sigla__c}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-m-top_large">
+              <p><strong><lightning:formattedNumber value="{!v.vooIda.Valor__c  + v.vooVolta.Valor__c}" style="currency" currencyCode="{!v.moeda}" currencyDisplayAs="code"/></strong></p>
+              <lightning:button variant="brand" label="Reservar" title="Reservar" onclick="{!c.reservaHandleClick}"/>
+            </div>
+          </div>
+    </lightning:card>  
+
+</aura:component>

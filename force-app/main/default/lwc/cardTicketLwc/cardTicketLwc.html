@@ -1,0 +1,10 @@
+<template>
+    <h1>{recordId}</h1>
+    <h2>{mensagem}</h2>
+    <lightning-button variant="brand" label="Clique aqui para a mágica acontecer" onclick={handlerClick}></lightning-button>
+    <template if:true={data}>
+        <h1>{data.label}</h1>
+        <h2>{data.pluralLabel}</h2>
+        <h3>{data.iconName}</h3>        
+    </template>
+</template>

@@ -1,0 +1,7 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId">
+        
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="recordId" type="String" />
+    <span>Teste</span>
+    
+</aura:component>

@@ -1,0 +1,47 @@
+<apex:page id="AccountPDF" renderAs="pdf" docType="html-5.0" showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false" controller="AccountPDFController">
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>PDF</title>
+            <style>
+                ul{
+                    list-style: nome;
+                }
+            </style>
+        </head>
+        <body>
+            <section>
+                <h1>Account Information</h1>
+                <!-- currentAccount = getCurrentAccount da Controller, é possivel suprimir o get do método aqui-->
+                Name: {!currentAccount.Name}
+                Phone: {!currentAccount.Phone}
+                Website: {!currentAccount.WebSite}
+            </section>
+            <section>
+                <h1>Contact Information</h1>
+                <ul>
+                    <apex:repeat value="{!contactsInformation}" var="conInfo">
+                        <li>
+                            {!conInfo}
+                        </li>                        
+                    </apex:repeat>                   
+                </ul>
+                <section>
+                    <h1>Terms and Conditions</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed sapien convallis, maximus dolor in, malesuada ligula. Proin id ligula sit amet libero pellentesque dapibus. Sed vel ipsum elit. Fusce semper malesuada purus quis blandit. Proin hendrerit vestibulum faucibus. Duis molestie bibendum arcu scelerisque sollicitudin. Vivamus commodo convallis neque, id lobortis tellus aliquam quis. Curabitur condimentum turpis id nibh ullamcorper, eu finibus sem cursus. Suspendisse non odio id lectus tristique suscipit. Praesent viverra in turpis in aliquet. Donec tempus, ipsum placerat faucibus aliquet, eros erat tempor nulla, eu aliquam sapien nulla in nisl. Cras porta nibh dolor, ut cursus nulla bibendum eu.
+
+                        Nunc id tempus tortor. Pellentesque ultricies elit sodales orci commodo, consequat malesuada libero tristique. Sed eu aliquam risus, vitae sagittis ex. Phasellus elit ante, bibendum et pellentesque id, accumsan ut elit. Maecenas blandit magna enim. Nunc suscipit urna ac metus tempus congue. Ut mauris lectus, suscipit in lobortis et, ultrices vel odio. Duis suscipit vehicula ultrices.
+
+                        Praesent bibendum risus nec nulla volutpat, eu luctus dolor consectetur. Vivamus viverra commodo sem, id ornare odio volutpat vel. Cras vestibulum a ante non auctor. Nulla viverra purus eget elementum malesuada. Aenean in turpis a est posuere condimentum. Suspendisse lacus dolor, rutrum vel lorem non, varius interdum tortor. Maecenas id faucibus risus, ut condimentum augue. Curabitur consectetur scelerisque ullamcorper. Donec aliquet lorem sit amet dolor semper scelerisque. Vivamus dignissim, augue a varius imperdiet, odio ante auctor dolor, ut congue nulla dui sed felis. Praesent porttitor orci eget varius mollis. Nulla scelerisque sem quam, nec vulputate enim elementum ultrices. Morbi suscipit urna congue turpis pharetra, ac hendrerit lacus congue.
+
+                        Morbi rhoncus enim in vulputate cursus. Suspendisse lacinia blandit diam gravida vulputate. Maecenas condimentum euismod nulla eu posuere. Maecenas maximus mollis ex a hendrerit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec ultricies tellus ac arcu pellentesque volutpat. Mauris et velit vitae nunc elementum cursus. Duis facilisis mollis tincidunt. Nunc ac lectus ante. Phasellus viverra a erat quis suscipit. Suspendisse a est ac nisl vestibulum ultrices.
+
+                        Suspendisse nec nisi gravida, viverra purus a, vulputate ipsum. Suspendisse at metus non lectus sagittis suscipit eu vitae mauris. Nunc lobortis aliquam purus vel semper. Mauris scelerisque augue ullamcorper nulla mattis bibendum. Nunc finibus feugiat maximus. Aliquam laoreet, est maximus tincidunt consectetur, erat eros dignissim enim, eu sagittis metus dui vitae nibh. Phasellus gravida cursus nisl sit amet consequat. Sed pretium felis ac nulla dignissim, at porttitor mi sodales. Suspendisse tincidunt vel lectus vitae pulvinar. In facilisis tellus sapien, at mattis justo vestibulum eget. Phasellus rutrum neque felis, quis sollicitudin turpis pulvinar quis. Cras cursus ullamcorper augue sed viverra.
+                    </p>
+                </section>
+            </section>
+        </body>
+    </html>
+</apex:page>

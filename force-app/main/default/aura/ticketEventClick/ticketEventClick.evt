@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Evento disparado ao click do botão Reservar">
+    <aura:attribute name="IdVooIda" type="String"/>
+    <aura:attribute name="IdVooVolta" type="String"/>
+</aura:event>

@@ -1,0 +1,91 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global" controller="TicketsController">
+    <aura:attribute name="voos" type="Object" default="[]"/>
+
+    <aura:handler name="init" value="this" action="{!c.init}"/>
+    <!-- action="{!c.init} -> vai chamar o método(init) que está no JS(TicketManagerController.js) desta bundle(TicketManager)}" -->
+
+    <aura:attribute name="moeda" type="String"/>
+    <aura:attribute name="modo24h" type="Boolean" default="false"/>
+
+    <aura:handler name="ticketEventClick" event="c:ticketEventClick" action="{!c.handlerEventClick}"/>
+    <!-- action="{!c.handlerEventClick}" chama no JD deste component o método com esse nome -->
+    <!-- event="c:ticketEventClick" referência para o aura Event ticketEventClick -->
+
+    <ltng:require scripts="{!$Resource.Formatter}" afterScriptsLoaded="{!c.afterScriptsLoaded}" />
+    <!-- ltng:require scripts="{!$Resource.Formatter}" Carrega um recurso estático que foi importado para a Org por um arquivo enviado -->
+
+    <aura:attribute name="aeroportoOrigem" type="String"/>
+    <aura:attribute name="aeroportoDestino" type="String"/>
+
+    <aura:attribute name="dataPartida" type="String"/>
+    <aura:attribute name="dataRetorno" type="String"/>
+    <aura:attribute name="minDate" type="String"/>
+    
+    <aura:attribute name="hasResult" type="Boolean" default="false"/>
+
+    <aura:attribute name="recordId" type="String"/>
+    
+    <div>
+        {!v.recordId}
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <lightning:select label="Selecione a moeda desejada" required="true" value="{!v.moeda}">
+                    <option value="BRL">Real R$</option>
+                    <option value="USD">Dólar US$</option>
+                    <option value="EUR">Euro EU$</option>
+                </lightning:select>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <c:lookupField objectAPIName="Aeroporto__c" 
+                               label="Aeroporto de Origem"
+                               returnFields="['Name','Sigla__c','Estado__r.Name']" 
+                               queryFields="['Name','Sigla__c','Estado__r.Name']"
+                               selectedId="{!v.aeroportoOrigem}"
+                               showAddNew="false"
+                               />
+            </div>
+            <div class="slds-col">
+                <c:lookupField objectAPIName="Aeroporto__c" 
+                               label="Aeroporto de Destino"
+                               returnFields="['Name','Sigla__c','Estado__r.Name']" 
+                               queryFields="['Name','Sigla__c','Estado__r.Name']"
+                               selectedId="{!v.aeroportoDestino}"
+                               showAddNew="false"
+                               />
+            </div>
+        </div>
+
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <lightning:input type="date" label="Data de partida" dateStyle="short" min="{!v.minDate}" value="{!v.dataPartida}"/>    
+            </div>
+            <div class="slds-col">
+                <lightning:input type="date" label="Data de retorno" dateStyle="short" min="{!v.minDate}" value="{!v.dataRetorno}"/>
+            </div>            
+        </div>
+
+        <div class="slds-grid slds-gutters slds-var-m-top_medium">
+            <div class="slds-col">
+                <lightning:button class="wide" variant="brand" label="Procurar Ticket" title="Procurar Ticket" iconName="utility:search" iconPosition="right" onclick="{!c.handleClick}"/>
+            </div>            
+        </div>
+
+        <aura:if isTrue="{!v.hasResult}">
+            <div class="slds-grid slds-gutters slds-m-top_medium">
+                <div class="slds-col">
+                    <aura:iteration items="{!v.voos}" var="voo">
+                        <c:cardTicket vooIda="{!voo.vooIda}"
+                                    vooVolta="{!voo.vooVolta}"
+                                    moeda="{!v.moeda}"  
+                        ></c:cardTicket>
+                    </aura:iteration>
+                </div>
+            </div>
+        </aura:if>
+
+    </div>
+
+</aura:component>
