@@ -21,7 +21,7 @@ jobs:
 
     #PASSOS DO MEU JOV
       steps:
-        - uses: action/checkout@v2
+        - uses: actions/checkout@v2
 
         #PARA OBTER O SFDX AUTH URL -> TERMINAL->sfdx force:org:display --verbose
         - name: VALIDATE PACKAGE
