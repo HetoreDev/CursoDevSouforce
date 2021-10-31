@@ -1,0 +1,36 @@
+#NOMEAR O WORKFLOW
+name: DevOpsProcess
+
+#QUAL EVENTO QUE DISPARA ESTE WORKFLOW ?
+on:
+  push:
+    branches: [master]
+
+# JOBS SÃO PROCESSOS EM AMBIENTES SEPARADOS
+jobs:
+
+  #CI : RESPONSÁVEL POR TESTAR O CÓDIGO DA NOSSA APLICAÇÃO(EXECUTA O CÓDIGO EM UMA SCRATCH  ORG)
+  CI:
+
+    #SO EM QUE O JOB SERA EXECUTADO(qual o sistema que será rodado a máquina virtual)
+    runs-on: ubuntu-latest
+
+    #DEFININDO A IMAGEM DO CONTAINER(aqui diremos para pegar de dentro do repositório do dockerhub a imagem do salesforce que será instalado no nosso SO virtual)
+    container:
+      image: salesforce/salesforcedx
+
+    #PASSOS DO MEU JOV
+      steps:
+        - uses: action/checkout@v2
+
+        #PARA OBTER O SFDX AUTH URL -> TERMINAL->sfdx force:org:display --verbose
+        - name: VALIDATE PACKAGE
+          run: | 
+            echo force://${{ secrets.CLI_APP }}::${{ secrets.USER_TOKEN }}@${{ secrets.SF_URL }} >> config/auth.txt
+            sfdx force:auth:sfdxurl:store -f config/auth.txt -s -a MyOrg
+            sfdx force:org:create -f config/project-scratch-def.json -a Demo company -s -v MyOrg
+            sfdx force:source:push -u Demo company
+            sfdx force:apex:test:run -l RunLocalTest -u Demo company -c -r human -w 2 --verbose
+            sfdx force:org:delete -u Demo company -p
+
+  
